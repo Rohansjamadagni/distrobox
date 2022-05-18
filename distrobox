@@ -59,6 +59,12 @@ case "${distrobox_command}" in
 	create)
 		"${distrobox_path}"/distrobox-create "$@"
 		;;
+	images)
+		podman images "$@"
+		;;
+	pull)
+		podman pull "$@"
+		;;
 	enter)
 		"${distrobox_path}"/distrobox-enter "$@"
 		;;

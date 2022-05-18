@@ -393,6 +393,18 @@ generate_command() {
 		result_command="${result_command}
 			--pid host"
 	fi
+
+  # For passing Nvidia GPUS to the container we need to first make sure 
+  # the nvidia driver is installed, we can check this by checking the existence
+  # of `nvidia-smi`
+  if command -v "nvidia-smi" >> /dev/null ; then
+    result_command="${result_command}
+    --env NVIDIA_DRIVER_CAPABILITIES=all
+    "
+  else
+    echo "GPU driver not installed"
+  fi
+
 	# Mount useful stuff inside the container.
 	# We also mount host's root filesystem to /run/host, to be able to syphon
 	# dynamic configurations from the host.

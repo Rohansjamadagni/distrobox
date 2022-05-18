@@ -288,6 +288,8 @@ if ! command -v find || ! command -v mount || ! command -v passwd ||
 			procps \
 			sudo \
 			wget \
+			git \
+      figlet \
 			util-linux
 
 	elif command -v dnf; then
@@ -399,6 +401,10 @@ if ! command -v find || ! command -v mount || ! command -v passwd ||
 			sudo \
 			util-linux \
 			wget \
+      figlet \
+      lolcat \
+      git \
+      neovim \
 			vte-common
 
 	elif command -v slackpkg; then
@@ -821,6 +827,17 @@ printf "distrobox: Executing init hooks...\n"
 # shellcheck disable=SC2086
 eval ${init_hook}
 
+########### CUSTOM STUFF ###########
+printf "Downloading and installing shell prompt"
+
+curl -sS https://starship.rs/install.sh | sh -s -- --yes
+
+if command -v apt >> /dev/null; then
+  printf "Downloading nvim"
+  wget -O /tmp/nvim.deb https://github.com/neovim/neovim/releases/download/v0.7.0/nvim-linux64.deb && sudo apt install /tmp/nvim.deb
+fi
+
+########### CUSTOM STUFF ###########
 printf "container_setup_done\n"
 
 if [ "${init}" -eq 0 ]; then
