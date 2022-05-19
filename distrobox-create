@@ -398,6 +398,9 @@ generate_command() {
   # the nvidia driver is installed, we can check this by checking the existence
   # of `nvidia-smi`
   if command -v "nvidia-smi" >> /dev/null ; then
+    if [ ${container_manager} = "docker" ]; then
+      result_command="${result_command} --gpus all"
+    fi
     result_command="${result_command}
     --env NVIDIA_DRIVER_CAPABILITIES=all
     "
