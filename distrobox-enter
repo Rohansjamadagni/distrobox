@@ -439,6 +439,11 @@ if [ "${container_status}" != "running" ]; then
 	printf >&2 "\nContainer Setup Complete!\n"
 fi
 
+# Disable user site packages for python to avoid conflicts with locally installed packages
+# Workaround is to use sudo pip or pip install --system <package> to install new packages
+export PYTHONNOUSERSITE=1 
+# Enable display pass through permissions
+xhost + &
 # Generate the exec command and run it
 cmd="$(generate_command)"
 # shellcheck disable=SC2086
